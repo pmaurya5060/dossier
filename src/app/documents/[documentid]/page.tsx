@@ -1,12 +1,16 @@
 interface DocumentIdProps{
-    params:Promise<{documentid:string}>;
-};
-
-const app = async({params}:DocumentIdProps) => {
-    const {documentid}= await params;
-  return (
-    <div>Document id:{documentid}</div>
-  )
+  params:Promise<{documentid:string}>;
 }
 
-export default app
+const DocumentIdPage=async({params}:DocumentIdProps)=>{
+  const {documentid}=await params;
+
+  return(
+    <div>
+      DocumentId:{documentid}
+    </div>
+  )
+
+}
+
+export default DocumentIdPage;
