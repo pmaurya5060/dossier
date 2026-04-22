@@ -4,6 +4,7 @@ import Heading from '@tiptap/extension-heading'
 import {useEditor,EditorContent} from "@tiptap/react";
 import { TaskItem,TaskList } from "@tiptap/extension-list";
 import { TableKit } from '@tiptap/extension-table'
+import Image from '@tiptap/extension-image'
 import StarterKit from "@tiptap/starter-kit";
 
 export const Editor=()=>{
@@ -25,6 +26,7 @@ export const Editor=()=>{
       TableKit.configure({
         table: { resizable: true },
       }),
+      Image,
     ],
     content: `
         <table>
