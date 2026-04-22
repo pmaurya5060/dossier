@@ -1,5 +1,6 @@
 "use client";
 
+import Heading from '@tiptap/extension-heading'
 import {useEditor,EditorContent} from "@tiptap/react";
 import { TaskItem,TaskList } from "@tiptap/extension-list";
 import StarterKit from "@tiptap/starter-kit";
