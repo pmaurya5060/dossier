@@ -3,6 +3,7 @@
 import Heading from '@tiptap/extension-heading'
 import {useEditor,EditorContent} from "@tiptap/react";
 import { TaskItem,TaskList } from "@tiptap/extension-list";
+import { TableKit } from '@tiptap/extension-table'
 import StarterKit from "@tiptap/starter-kit";
 
 export const Editor=()=>{
@@ -21,8 +22,26 @@ export const Editor=()=>{
         nested:true
       }),
       TaskList,
+      TableKit.configure({
+        table: { resizable: true },
+      }),
     ],
-    content:"<p>Hello World! 🌍</p>",
+    content: `
+        <table>
+          <tbody>
+            <tr>
+              <th>Name</th>
+              <th colspan="3">Description</th>
+            </tr>
+            <tr>
+              <td>Cyndi Lauper</td>
+              <td>Singer</td>
+              <td>Songwriter</td>
+              <td>Actress</td>
+            </tr>
+          </tbody>
+        </table>
+      `,
   });
   
   return (
