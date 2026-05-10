@@ -17,8 +17,7 @@ const ToolBar=({
         <button
         onClick={onClick}
         className={cn(
-  "text-sm h-7 min-w-7 flex items-center justify-center rounded-sm hover:bg-neutral-200/80",
-  isActive && "bg-neutral-200/80"
+  "text-sm h-7 min-w-7 m-auto flex items-center justify-center gap-1.5 rounded-sm overflow-x-auto "
 )}
         >
             <Icon className="size-4"/>
@@ -104,7 +103,7 @@ export const Toolbar=()=>{
                 isActive:true,
             },
             {
-                label:"italic",
+                label:"highlighter",
                 icon:Highlighter,
                 onClick:()=>console.log("italic clicked"),
                 isActive:true,
@@ -118,7 +117,7 @@ export const Toolbar=()=>{
                 isActive:true,
             },
             {
-                label:"link",
+                label:"comment",
                 icon:MessageSquarePlusIcon,
                 onClick:()=>console.log("plus clicked"),
                 isActive:true,
@@ -165,9 +164,12 @@ export const Toolbar=()=>{
 
     ];
 
-    
+
     return (
         <div className="bg-[#F1F4F9] px-2.5 py-0.5 rounded-[24px] min-h-10 flex items-center gap-x-0.5 overflow-x-auto">
+            <div>
+
+            </div>
             {section.map((group,index)=>(
                 <div className="flex" key={index}>
                     {group.map((item) => (
