@@ -9,9 +9,12 @@ const DocumentIdPage=async({params}:DocumentIdProps)=>{
   const {documentid}=await params;
 
   return(
-    <div>
-      <Toolbar/>
-      <Editor/>
+    <div className="min-h-screen bg-[#f1f3f4]">
+      <Toolbar />
+
+      <div className="flex justify-center">
+        <Editor />
+      </div>
     </div>
   )
 

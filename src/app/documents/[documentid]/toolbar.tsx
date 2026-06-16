@@ -1,7 +1,14 @@
 "use client";
 
-import {AlignLeft, ArrowUpDown, Baseline, BoldIcon, Highlighter, Image, Italic, Link2, List, ListOrdered, ListTodo, LucideIcon, MessageSquarePlusIcon, PaintRoller, Printer, Redo2Icon, Search, SpellCheckIcon, Underline, Undo2Icon} from "lucide-react";
+import {AlignCenter, AlignLeft, AlignRight, ArrowUpDown, Baseline, BoldIcon, Highlighter, Image, Italic, Link2, List, ListOrdered, ListTodo, LucideIcon, MessageSquarePlusIcon, PaintRoller, Printer, Redo2Icon, RemoveFormattingIcon, Search, SpellCheckIcon, Underline, Undo2Icon} from "lucide-react";
 import { cn } from "../../lib/utils";
+import {useEditorStore} from '@/store/use-editor-store';
+import { Separator } from "@/src/app/components/ui/separator"
+
+
+
+
+
 interface ToolBarbuttonProps{
     onClick?:()=>void;
     isActive?:boolean;
@@ -17,7 +24,7 @@ const ToolBar=({
         <button
         onClick={onClick}
         className={cn(
-  "text-sm h-7 min-w-7 m-auto flex items-center justify-center gap-1.5 rounded-sm overflow-x-auto "
+  "text-sm h-7 min-w-7 flexjustify-center gap-1.5 rounded-sm overflow-x-auto "
 )}
         >
             <Icon className="size-4"/>
@@ -27,6 +34,9 @@ const ToolBar=({
 
 
 export const Toolbar=()=>{
+    const editor = useEditorStore(
+        (state) => state.editor
+    );
     const section:{
         label:string;
         icon:LucideIcon;
@@ -43,25 +53,29 @@ export const Toolbar=()=>{
             {
                 label:"undo",
                 icon:Undo2Icon,
-                onClick:()=>console.log("undo clicked"),
-                isActive:true,
+                onClick: () =>
+                    editor?.chain().focus().undo().run(),
+                isActive: editor?.can().undo() || false,
             },
             {
                 label:"redo",
                 icon:Redo2Icon,
-                onClick:()=>console.log("redo clicked"),
-                isActive:true,
+                onClick:()=>editor?.chain().focus().redo().run(),
+                isActive:editor?.can().undo() || false,
             },
             {
                 label:"printer",
                 icon:Printer,
-                onClick:()=>console.log("printer clicked"),
+                onClick:()=>window.print(),
                 isActive:true,
             },
             {
                 label:"spell",
                 icon:SpellCheckIcon,
-                onClick:()=>console.log("spell clicked"),
+                onClick:()=>{
+                    const current =editor?.view.dom.getAttribute("spellcheck");
+                    editor?.view.dom.setAttribute("spellcheck",current==="false"?"true":"false");
+                },
                 isActive:true,
             },
             {
@@ -81,20 +95,20 @@ export const Toolbar=()=>{
             {
                 label:"bold",
                 icon:BoldIcon,
-                onClick:()=>console.log("bold clicked"),
-                isActive:true,
+                 onClick:() =>editor?.chain().focus().toggleBold().run(),
+                isActive:editor?.isActive("bold") || false,
             },
             {
                 label:"italic",
                 icon:Italic,
-                onClick:()=>console.log("italic clicked"),
-                isActive:true,
+                onClick:()=> editor?.chain().focus().toggleItalic().run(),
+                isActive:editor?.isActive("italic") || false,
             },
             {
                 label:"underline",
                 icon:Underline,
-                onClick:()=>console.log("underline clicked"),
-                isActive:true,
+                onClick:()=>editor?.chain().focus().toggleUnderline().run(),
+                isActive:editor?.isActive("underline") || false,
             },
             {
                 label:"textcolor",
@@ -105,8 +119,8 @@ export const Toolbar=()=>{
             {
                 label:"highlighter",
                 icon:Highlighter,
-                onClick:()=>console.log("italic clicked"),
-                isActive:true,
+                onClick:()=>editor?.chain().focus().toggleHighlight().run(),
+                isActive:editor?.isActive("highlight") || false,
             },
         ],
         [
@@ -133,7 +147,19 @@ export const Toolbar=()=>{
             {
                 label: "align-left",
                 icon: AlignLeft,
-                onClick: () => console.log("align-left clicked"),
+                onClick: () => editor?.chain().focus().setTextAlign("left").run(),
+                isActive: true,
+            },
+            {
+                label: "align-center",
+                icon: AlignCenter,
+                onClick: () => editor?.chain().focus().setTextAlign("center").run(),
+                isActive: true,
+            },
+            {
+                label: "align-right",
+                icon: AlignRight,
+                onClick: () => editor?.chain().focus().setTextAlign("right").run(),
                 isActive: true,
             },
             {
@@ -145,20 +171,26 @@ export const Toolbar=()=>{
             {
                 label: "todo-list",
                 icon: ListTodo,
-                onClick: () => console.log("todo list clicked"),
-                isActive: false,
+                onClick: () =>  editor?.chain().focus().toggleTaskList().run(),
+                isActive:editor?.isActive("taskList") || false,
             },
             {
                 label: "bullet-list",
                 icon: List,
-                onClick: () => console.log("bullet list clicked"),
-                isActive: false,
+                onClick: () => editor?.chain().focus().toggleBulletList().run(),
+                isActive:editor?.isActive("bulletList") || false,
             },
             {
-            label: "ordered-list",
-            icon: ListOrdered,
-            onClick: () => console.log("ordered list clicked"),
-            isActive: false,
+                label: "ordered-list",
+                icon: ListOrdered,
+                onClick: () =>editor?.chain().focus().toggleOrderedList().run(),
+                isActive:editor?.isActive("orderedList") || false,
+            },
+            {
+                label: "remove-formatting",
+                icon: RemoveFormattingIcon,
+                onClick: () =>editor?.chain().focus().unsetAllMarks().run(),
+                isActive:editor?.isActive("removeFormatting") || false,
             },
         ],
 
@@ -166,16 +198,34 @@ export const Toolbar=()=>{
 
 
     return (
-        <div className="bg-[#F1F4F9] px-2.5 py-0.5 rounded-[24px] min-h-10 flex items-center gap-x-0.5 overflow-x-auto">
-            <div>
+        <div className="sticky top-0 z-50 bg-white border-b rounded-2xl m-1 h-16 flex items-center px-4 gap-2">
+            {section[0].map((item)=>(
+                <ToolBar key={item.label} {...item} />
+            ))}
+            
+            <Separator orientation="vertical" className="h-6 bg-neutral-800"></Separator>
 
-            </div>
-            {section.map((group,index)=>(
-                <div className="flex" key={index}>
-                    {group.map((item) => (
-                        <ToolBar key={item.label} {...item} />
-                    ))}
-                </div>
+            <Separator orientation="vertical" className="h-6 bg-neutral-800"></Separator>
+
+            <Separator orientation="vertical" className="h-6 bg-neutral-800"></Separator>
+
+            <Separator orientation="vertical" className="h-6 bg-neutral-800"></Separator>
+
+
+            {section[1].map((item)=>(
+                <ToolBar key={item.label} {...item} />
+            ))}
+
+            <Separator orientation="vertical" className="h-6 bg-neutral-800"></Separator>
+
+            {section[2].map((item)=>(
+                <ToolBar key={item.label} {...item} />
+            ))}
+
+            <Separator orientation="vertical" className="h-6 bg-neutral-800"></Separator>
+
+            {section[3].map((item)=>(
+                <ToolBar key={item.label} {...item} />
             ))}
         </div>
     );
