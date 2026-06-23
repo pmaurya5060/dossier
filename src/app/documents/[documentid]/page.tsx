@@ -1,6 +1,6 @@
 
 import {Toolbar} from './toolbar';
-import { Editor } from "./editor";
+import {Editor} from "./editor";
 interface DocumentIdProps{
   params:Promise<{documentid:string}>;
 }

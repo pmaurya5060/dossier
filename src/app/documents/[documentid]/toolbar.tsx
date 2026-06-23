@@ -1,10 +1,11 @@
 "use client";
 
-import {AlignCenter, AlignLeft, AlignRight, ArrowUpDown, Baseline, BoldIcon, Highlighter, Image, Italic, Link2, List, ListOrdered, ListTodo, LucideIcon, MessageSquarePlusIcon, PaintRoller, Printer, Redo2Icon, RemoveFormattingIcon, Search, SpellCheckIcon, Underline, Undo2Icon} from "lucide-react";
+import {AlignCenter, AlignLeft, AlignRight, ArrowUpDown, Baseline, BoldIcon, Highlighter, Image, Italic, Link2, List, ListOrdered, ListTodo, LucideIcon, MessageSquarePlusIcon, PaintRoller, Printer, Redo2Icon, RemoveFormattingIcon, Search, SpellCheckIcon, Underline, Undo2Icon,ChevronDownIcon} from "lucide-react";
 import { cn } from "../../lib/utils";
 import {useEditorStore} from '@/store/use-editor-store';
-import { Separator } from "../../../components/separator"
+import { Separator } from "../../../components/ui/separator"
 import { DropdownMenu,DropdownMenuContent,DropdownMenuItem,DropdownMenuTrigger } from "@/src/components/ui/dropdown-menu";
+import { Button } from "@/src/components/ui/button";
 
 const FontFamilyButton = () => {
   const { editor } = useEditorStore();
@@ -19,16 +20,31 @@ const FontFamilyButton = () => {
 
   return(
     <DropdownMenu>
-        <DropdownMenuTrigger>
-            <button className="h-7 ">
-
+        <DropdownMenuTrigger asChild>
+            <button className="h-7 w-30 shrink-0 flex items-center justify-between rounded-sm hoveer:bg-neutral-200/80 px-1.5 overflow-hidden text-sm">
+                <span className="truncate">
+                    {editor?.getAttributes("textStyle").fontFamily || "Ariel"}
+                </span>
+                <ChevronDownIcon className="ml-2 size-4 shrink-0"></ChevronDownIcon>
             </button>
+
         </DropdownMenuTrigger>
+        <DropdownMenuContent className="p-1 flex flex-col gap-y-1">
+            {fonts.map(({label,value})=>(
+                <button 
+                key={value}
+                className={cn(
+                    "flex items-center gap-x-2 px-2 py-1 rounded-sm hover:bg-neutral-200/80",
+                    editor?.getAttributes("textStyle").fontFamily=== value && "bg-neutral-200/80"
+                )}
+                style={{fontFamily:value}}
+                >
+                    <span className= "text-sm">{label}</span>
+                </button>
+            ))}
+        </DropdownMenuContent>
     </DropdownMenu>
   )
-
-
-
 };
 
 
@@ -226,13 +242,15 @@ export const Toolbar=()=>{
                 <ToolBar key={item.label} {...item} />
             ))}
             
-            <Separator orientation="vertical" className="h-6 bg-neutral-800"></Separator>
+            <Separator orientation="vertical" className="h-6 bg-neutral-200">
+                <FontFamilyButton/>
+            </Separator>
 
-            <Separator orientation="vertical" className="h-6 bg-neutral-800"></Separator>
+            <Separator orientation="vertical" className="h-6 bg-neutral-200"></Separator>
 
-            <Separator orientation="vertical" className="h-6 bg-neutral-800"></Separator>
+            <Separator orientation="vertical" className="h-6 bg-neutral-200"></Separator>
 
-            <Separator orientation="vertical" className="h-6 bg-neutral-800"></Separator>
+            <Separator orientation="vertical" className="h-6 bg-neutral-200"></Separator>
 
 
             {section[1].map((item)=>(
