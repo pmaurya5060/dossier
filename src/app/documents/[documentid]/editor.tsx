@@ -12,7 +12,8 @@ import { useEditorStore } from '@/store/use-editor-store';
 import { TextStyle, FontFamily } from '@tiptap/extension-text-style'
 import { TextStyleKit } from '@tiptap/extension-text-style'
 import { Color } from '@tiptap/extension-text-style';
-
+import Link from '@tiptap/extension-link'
+import { link } from 'fs';
 
 export const Editor=()=>{
 
@@ -51,6 +52,11 @@ export const Editor=()=>{
     },
     extensions:[
       StarterKit,
+      Link.configure({
+        openOnClick:false,
+        autolink:true,
+        defaultProtocol:"https",
+      }),
       TaskItem.configure({
         nested:true
       }),
@@ -58,13 +64,13 @@ export const Editor=()=>{
       TableKit.configure({
         table: { resizable: true },
       }),
-      Image,
       TextAlign.configure({
         types: ["heading", "paragraph"],
       }),
       Highlight.configure({
         multicolor:true,
       }),
+      Image,
       TextStyle, 
       Color,
       FontFamily,

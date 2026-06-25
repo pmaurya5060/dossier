@@ -5,11 +5,53 @@ import { cn } from "../../lib/utils";
 import {useEditorStore} from '@/store/use-editor-store';
 import { Separator } from "../../../components/ui/separator"
 import { DropdownMenu,DropdownMenuContent,DropdownMenuItem,DropdownMenuTrigger } from "@/src/components/ui/dropdown-menu";
-import { Button } from "@/src/components/ui/button";
+import { Button} from "@/src/components/ui/button";
+import { Input } from "@/src/components/ui/input"
 import {type Level} from "@tiptap/extension-heading";
 import {type ColorResult, CirclePicker, SketchPicker} from "react-color"
 import { BackgroundColor } from "@tiptap/extension-text-style";
+import { useState } from "react";
+import { useEditor } from "@tiptap/react";
 
+//link button
+const LinkButton=()=>{
+    const {editor}=useEditorStore();
+    const [value,setValue] =useState(editor?.getAttributes("link").href || "");
+
+    const onChange=(href:string)=>{
+        editor?.chain().focus().extendMarkRange("link").setLink({href}).run();
+        setValue("");
+    }
+
+    return(
+        <DropdownMenu onOpenChange={(open)=>{
+            if(open){
+                setValue(editor?.getAttributes("link").href || "")
+            }
+        }}>
+        <DropdownMenuTrigger asChild>
+            <button className="h-7 min-w-7 shrink-0 flex flex-col items-center justify-center rounded-sm hoveer:bg-neutral-200/80 px-1.5 overflow-hidden text-sm">
+                <Link2 className="size-4"/>
+            </button>
+
+        </DropdownMenuTrigger>
+        <DropdownMenuContent className="p-2.5 flex items-center gap-x-2">
+              <Input
+              placeholder="https://example.com"
+              value={value}
+              onChange={(e)=>setValue(e.target.value)}
+              />
+              <Button onClick={()=>onChange(value)}>
+                Apply
+              </Button>
+        </DropdownMenuContent>
+        </DropdownMenu>
+    )
+
+}
+
+
+// highlighter dropdown
 const HighlightColorButton=()=>{
     const {editor} =useEditorStore();
 
@@ -37,7 +79,7 @@ const HighlightColorButton=()=>{
     )
 }
 
-
+//Text color dropdown
 const TextColorButton=()=>{
     const {editor} =useEditorStore();
     const value=editor?.getAttributes("textStyle").color || "#000000";  
@@ -278,26 +320,8 @@ export const Toolbar=()=>{
                 onClick:()=>editor?.chain().focus().toggleUnderline().run(),
                 isActive:editor?.isActive("underline") || false,
             },
-            // {
-            //     label:"textcolor",
-            //     icon:Baseline,
-            //     onClick:()=>console.log("textcolor clicked"),
-            //     isActive:true,
-            // },
-            // {
-            //     label:"highlighter",
-            //     icon:Highlighter,
-            //     onClick:()=>editor?.chain().focus().toggleHighlight().run(),
-            //     isActive:editor?.isActive("highlight") || false,
-            // },
         ],
         [
-            {
-                label:"link",
-                icon:Link2,
-                onClick:()=>console.log("link clicked"),
-                isActive:true,
-            },
             {
                 label:"comment",
                 icon:MessageSquarePlusIcon,
@@ -393,6 +417,7 @@ export const Toolbar=()=>{
 
 
             <Separator orientation="vertical" className="h-6 w-px bg-neutral-400"/>
+                <LinkButton/>
                 {section[2].map((item)=>(
                     <ToolBar key={item.label} {...item} />
                 ))}
