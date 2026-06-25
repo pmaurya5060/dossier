@@ -8,6 +8,13 @@ import { DropdownMenu,DropdownMenuContent,DropdownMenuItem,DropdownMenuTrigger }
 import { Button } from "@/src/components/ui/button";
 import {type Level} from "@tiptap/extension-heading";
 
+
+const TextColorButton=()=>{
+    const {editor} =useEditorStore();
+}
+
+
+// Heading dropdown
 const HeadingLevelButton=()=>{
     const {editor}= useEditorStore();
 
@@ -67,6 +74,8 @@ const HeadingLevelButton=()=>{
     )
 }
 
+
+//Fonts dropdown
 const FontFamilyButton = () => {
   const { editor } = useEditorStore();
 

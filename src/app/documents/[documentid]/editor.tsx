@@ -10,6 +10,9 @@ import TextAlign from "@tiptap/extension-text-align";
 import Highlight from "@tiptap/extension-highlight";  
 import { useEditorStore } from '@/store/use-editor-store';
 import { TextStyle, FontFamily } from '@tiptap/extension-text-style'
+import { TextStyleKit } from '@tiptap/extension-text-style'
+import { Color } from '@tiptap/extension-text-style';
+
 
 export const Editor=()=>{
 
@@ -59,26 +62,14 @@ export const Editor=()=>{
       TextAlign.configure({
         types: ["heading", "paragraph"],
       }),
+      Highlight.configure({
+        multicolor:true,
+      }),
       TextStyle, 
+      Color,
       FontFamily,
+      TextStyleKit,
     ],
-    // content:`hello World`,
-    // content: `
-    //     <table>
-    //       <tbody>
-    //         <tr>
-    //           <th>Name</th>
-    //           <th colspan="3">Description</th>
-    //         </tr>
-    //         <tr>
-    //           <td>Cyndi Lauper</td>
-    //           <td>Singer</td>
-    //           <td>Songwriter</td>
-    //           <td>Actress</td>
-    //         </tr>
-    //       </tbody>
-    //     </table>
-    //   `,
   });
   
   return (
