@@ -1,6 +1,6 @@
 "use client";
 
-import {AlignCenter, AlignLeft, AlignRight, ArrowUpDown, Baseline, BoldIcon, Highlighter, Image, Italic, Link2, List, ListOrdered, ListTodo, LucideIcon, MessageSquarePlusIcon, PaintRoller, Printer, Redo2Icon, RemoveFormattingIcon, Search, SpellCheckIcon, Underline, Undo2Icon,ChevronDownIcon, HighlighterIcon, ImageIcon, UploadIcon, SearchIcon} from "lucide-react";
+import {AlignCenter, AlignLeft, AlignRight, ArrowUpDown, Baseline, BoldIcon, Highlighter, Image, Italic, Link2, List, ListOrdered, ListTodo, LucideIcon, MessageSquarePlusIcon, PaintRoller, Printer, Redo2Icon, RemoveFormattingIcon, Search, SpellCheckIcon, Underline, Undo2Icon,ChevronDownIcon, HighlighterIcon, ImageIcon, UploadIcon, SearchIcon, AlignJustify, ListIcon} from "lucide-react";
 import { cn } from "../../lib/utils";
 import {useEditorStore} from '@/store/use-editor-store';
 import { Separator } from "../../../components/ui/separator"
@@ -19,6 +19,116 @@ import {type Level} from "@tiptap/extension-heading";
 import {type ColorResult, CirclePicker, SketchPicker} from "react-color"
 import { BackgroundColor } from "@tiptap/extension-text-style";
 import { useState } from "react";
+import TextAlign from "@tiptap/extension-text-align";
+
+
+
+const ListButton=()=>{
+    const {editor} =useEditorStore();
+
+    const Lists=[
+        {
+            label: "bullet-list",
+            icon: List,
+            onClick: () => editor?.chain().focus().toggleBulletList().run(),
+            isActive:()=>editor?.isActive("bulletList") || false,
+        },
+        {
+            label: "ordered-list",
+            icon: ListOrdered,
+            onClick: () =>editor?.chain().focus().toggleOrderedList().run(),
+            isActive:()=>editor?.isActive("orderedList") || false,
+        },        
+    ]
+
+    return(
+        <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+            <button className="h-7 min-w-7 shrink-0 flex flex-col items-center justify-center rounded-sm hoveer:bg-neutral-200/80 px-1.5 overflow-hidden text-sm">
+                <ListIcon className="size-4"/>
+            </button>
+
+        </DropdownMenuTrigger>
+        <DropdownMenuContent className="p-1 flex flex-col gap-y-1">
+              {Lists.map(({label,icon:Icon,onClick,isActive})=>
+                    <button 
+                    key={label}
+                    onClick={onClick}
+                    className={cn(
+                        "flex items-center gap-x-2 px-2 py-1 rounded-sm hover:bg-neutral-200/80",
+                        isActive() && "bg-neutral-200/80"
+                    )}
+                    >
+                        <Icon className="size-4"/>
+                        <span className="text-sm">{label}</span>
+                    </button>   
+
+            ) }
+        </DropdownMenuContent>
+        </DropdownMenu>
+    )
+}
+
+
+//Allign button
+const AlignButton=()=>{
+    const {editor} =useEditorStore();
+
+    const alignments=[
+        {
+                label: "align-left",
+                value:"left",
+                icon: AlignLeft,
+                // onClick: () => editor?.chain().focus().setTextAlign("left").run(),
+            },
+            {
+                label: "align-center",
+                value:"center",
+                icon: AlignCenter,
+                // onClick: () => editor?.chain().focus().setTextAlign("center").run(),
+            },
+            {
+                label: "align-right",
+                value:"right",
+                icon: AlignRight,
+                // onClick: () => editor?.chain().focus().setTextAlign("right").run(),
+            },
+            {
+                label: "align-justify",
+                value:"justify",
+                icon: AlignJustify,
+                // ,
+            },
+    ]
+
+    return(
+        <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+            <button className="h-7 min-w-7 shrink-0 flex flex-col items-center justify-center rounded-sm hoveer:bg-neutral-200/80 px-1.5 overflow-hidden text-sm">
+                <AlignLeft className="size-4"/>
+            </button>
+
+        </DropdownMenuTrigger>
+        <DropdownMenuContent className="p-1 flex flex-col gap-y-1">
+              {alignments.map(({label,value,icon:Icon})=>
+                    <button 
+                    key={value}
+                    onClick={ () => editor?.chain().focus().setTextAlign(value).run()}
+                    className={cn(
+                        "flex items-center gap-x-2 px-2 py-1 rounded-sm hover:bg-neutral-200/80",
+                        editor?.isActive({TextAlign:value}) && "bg-neutral-200/80"
+                    )}
+                    >
+                        <Icon className="size-4"/>
+                        <span className="text-sm">{label}</span>
+                    </button>   
+
+            ) }
+        </DropdownMenuContent>
+        </DropdownMenu>
+    )
+}
+
 
 //Image button
 const ImageButton=()=>{
@@ -176,6 +286,7 @@ const HighlightColorButton=()=>{
         </DropdownMenu>
     )
 }
+
 
 //Text color dropdown
 const TextColorButton=()=>{
@@ -428,24 +539,7 @@ export const Toolbar=()=>{
             },
         ],
         [
-            {
-                label: "align-left",
-                icon: AlignLeft,
-                onClick: () => editor?.chain().focus().setTextAlign("left").run(),
-                isActive: true,
-            },
-            {
-                label: "align-center",
-                icon: AlignCenter,
-                onClick: () => editor?.chain().focus().setTextAlign("center").run(),
-                isActive: true,
-            },
-            {
-                label: "align-right",
-                icon: AlignRight,
-                onClick: () => editor?.chain().focus().setTextAlign("right").run(),
-                isActive: true,
-            },
+            
             {
                 label: "sort",
                 icon: ArrowUpDown,
@@ -458,18 +552,7 @@ export const Toolbar=()=>{
                 onClick: () =>  editor?.chain().focus().toggleTaskList().run(),
                 isActive:editor?.isActive("taskList") || false,
             },
-            {
-                label: "bullet-list",
-                icon: List,
-                onClick: () => editor?.chain().focus().toggleBulletList().run(),
-                isActive:editor?.isActive("bulletList") || false,
-            },
-            {
-                label: "ordered-list",
-                icon: ListOrdered,
-                onClick: () =>editor?.chain().focus().toggleOrderedList().run(),
-                isActive:editor?.isActive("orderedList") || false,
-            },
+            
             {
                 label: "remove-formatting",
                 icon: RemoveFormattingIcon,
@@ -511,6 +594,8 @@ export const Toolbar=()=>{
             <Separator orientation="vertical" className="h-6 w-px bg-neutral-400"/>
                 <LinkButton/>
                 <ImageButton/>
+                <AlignButton/>
+                <ListButton/>
                 {section[2].map((item)=>(
                     <ToolBar key={item.label} {...item} />
                 ))}
