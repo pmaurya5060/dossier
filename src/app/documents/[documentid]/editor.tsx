@@ -8,12 +8,14 @@ import Image from '@tiptap/extension-image'
 import StarterKit from "@tiptap/starter-kit";
 import TextAlign from "@tiptap/extension-text-align";
 import Highlight from "@tiptap/extension-highlight";  
-import { useEditorStore } from '@/store/use-editor-store';
 import { TextStyle, FontFamily } from '@tiptap/extension-text-style'
 import { TextStyleKit } from '@tiptap/extension-text-style'
 import { Color } from '@tiptap/extension-text-style';
 import Link from '@tiptap/extension-link'
 import { link } from 'fs';
+
+import { useEditorStore } from '@/store/use-editor-store';
+import { FontSizeExtension } from '@/src/extensions/font-size';
 
 export const Editor=()=>{
 
@@ -52,6 +54,7 @@ export const Editor=()=>{
     },
     extensions:[
       StarterKit,
+      FontSizeExtension,
       Link.configure({
         openOnClick:false,
         autolink:true,
@@ -75,6 +78,7 @@ export const Editor=()=>{
       Color,
       FontFamily,
       TextStyleKit,
+
     ],
   });
   
