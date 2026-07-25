@@ -16,6 +16,7 @@ import { link } from 'fs';
 
 import { useEditorStore } from '@/store/use-editor-store';
 import { FontSizeExtension } from '@/src/extensions/font-size';
+import { LineHeightExtension } from '@/src/extensions/line-height';
 
 export const Editor=()=>{
 
@@ -55,6 +56,10 @@ export const Editor=()=>{
     extensions:[
       StarterKit,
       FontSizeExtension,
+      LineHeightExtension.configure({
+        types:["heading","paragraph"],
+        defaultLineHeight:"normal"
+      }),
       Link.configure({
         openOnClick:false,
         autolink:true,
