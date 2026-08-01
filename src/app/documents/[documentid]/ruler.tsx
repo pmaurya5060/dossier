@@ -81,7 +81,7 @@ const handleRightMouseDown: React.MouseEventHandler<HTMLDivElement> = (e) => {
           onDoubleClick={handleRightMouseDoubleClick}
         />
         <div className="absolute inset-x-0 bottom-0 h-full">
-          <div className="relative h-full w-[816px]">
+          <div className="relative h-full w-204">
             {markers.map((marker) => {
               const position = (marker * 816) / 82;
               const isMajor = marker % 10 === 0;

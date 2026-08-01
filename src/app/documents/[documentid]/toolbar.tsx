@@ -623,18 +623,6 @@ export const Toolbar=()=>{
                 },
                 isActive:true,
             },
-            {
-                label:"paint",
-                icon:PaintRoller,
-                onClick:()=>console.log("paint clicked"),
-                isActive:true,
-            },
-            {
-                label:"size",
-                icon:PaintRoller,
-                onClick:()=>console.log("paint clicked"),
-                isActive:true,
-            },
         ],
         [
             {
