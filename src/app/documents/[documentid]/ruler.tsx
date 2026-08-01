@@ -61,10 +61,10 @@ const handleRightMouseDown: React.MouseEventHandler<HTMLDivElement> = (e) => {
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
       onMouseLeave={handleMouseUp}
-    className="h-6 border-b border-gray-300 flex items-end relative select-none print:hidden">
+    className="w-204 mx-auto h-6 border-b border-gray-300 flex items-end relative select-none print:hidden">
       <div
         id="ruler-container"
-        className="mx-auto h-full w-full max-w-[816px] relative"
+        className="h-full w-full relative"
       >
         <Marker
           position={leftMargin}
