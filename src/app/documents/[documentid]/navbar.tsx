@@ -1,5 +1,7 @@
 import Link from "next/link" 
 import Image from "next/image"
+import { DocumentInput } from "./document-input"
+
 export const Navbar = () => {
   return (
     <nav className="flex items-center justify-between">
@@ -9,6 +11,7 @@ export const Navbar = () => {
             </Link>
             <div className="flex flex-col">
                 {/*Document title*/}
+                <DocumentInput />
                 {/*MenuBar*/}
             </div>
         </div>
