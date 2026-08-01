@@ -1,5 +1,15 @@
 import Link from "next/link" 
 import Image from "next/image"
+
+import {
+    Menubar,
+    MenubarContent,
+    MenubarItem,
+    MenubarMenu,
+    MenubarSeparator,
+    MenubarTrigger,
+  } from "@/src/components/ui/menubar"
+}
 import { DocumentInput } from "./document-input"
 
 export const Navbar = () => {
