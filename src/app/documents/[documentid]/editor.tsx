@@ -12,7 +12,7 @@ import { TextStyle, FontFamily } from '@tiptap/extension-text-style'
 import { TextStyleKit } from '@tiptap/extension-text-style'
 import { Color } from '@tiptap/extension-text-style';
 import Link from '@tiptap/extension-link'
-import { link } from 'fs';
+import { Ruler } from './ruler';
 
 import { useEditorStore } from '@/store/use-editor-store';
 import { FontSizeExtension } from '@/src/extensions/font-size';
@@ -48,7 +48,7 @@ export const Editor=()=>{
     immediatelyRender:false,
     editorProps:{
       attributes:{
-         style: "padding-left:96px;padding-right:96px;",
+         style: "padding-left:56px;padding-right:56px;",
       class:
         "ProseMirror focus:outline-none bg-white border border-[#c7c7c7] shadow-sm min-h-[1056px] w-[816px] pt-[72px] pb-[72px] cursor-text",
       },
@@ -89,6 +89,7 @@ export const Editor=()=>{
   
   return (
     <div className="size-full overflow-x-auto bg-[#dadada] px-4 print:p-0 print:bg-white">
+      <Ruler/>
     <div className="min-w-max flex justify-center w-204 py-4 print:py-0 mx-auto print:w-full print:min-w-0">
       <EditorContent editor={editor}/>
     </div>

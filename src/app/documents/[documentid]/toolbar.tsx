@@ -16,8 +16,6 @@ import {Dialog,
 import { Button} from "@/src/components/ui/button";
 import { Input } from "@/src/components/ui/input"
 import {type Level} from "@tiptap/extension-heading";
-import {type ColorResult, CirclePicker, SketchPicker} from "react-color"
-import { BackgroundColor } from "@tiptap/extension-text-style";
 import { useState } from "react";
 import TextAlign from "@tiptap/extension-text-align";
 
@@ -388,8 +386,8 @@ const HighlightColorButton=()=>{
 
     const value=editor?.getAttributes('highlight').color || "#000000";
 
-    const onChange=(color:ColorResult)=>{
-        editor?.chain().focus().setHighlight({color: color.hex}).run();
+    const onChange=(nextColor:string)=>{
+        editor?.chain().focus().setHighlight({ color: nextColor }).run();
     };
 
     return(
@@ -400,10 +398,12 @@ const HighlightColorButton=()=>{
             </button>
 
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="p-0">
-              <SketchPicker
-                color={value}
-                onChange={onChange}
+        <DropdownMenuContent className="p-2">
+              <input
+                type="color"
+                value={value}
+                onChange={(e) => onChange(e.target.value)}
+                className="h-10 w-16 cursor-pointer rounded border border-neutral-300 bg-transparent"
               />
         </DropdownMenuContent>
         </DropdownMenu>
@@ -414,9 +414,10 @@ const HighlightColorButton=()=>{
 //Text color dropdown
 const TextColorButton=()=>{
     const {editor} =useEditorStore();
-    const value=editor?.getAttributes("textStyle").color || "#000000";  
-    const onChange=(color:ColorResult)=>{
-        editor?.chain().focus().setColor(color.hex).run();
+    const value=editor?.getAttributes("textStyle").color || "#000000";
+
+    const onChange=(nextColor:string)=>{
+        editor?.chain().focus().setColor(nextColor).run();
     };
 
     return(
@@ -430,10 +431,12 @@ const TextColorButton=()=>{
             </button>
 
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="p-0">
-              <SketchPicker
-                color={value}
-                onChange={onChange}
+        <DropdownMenuContent className="p-2">
+              <input
+                type="color"
+                value={value}
+                onChange={(e) => onChange(e.target.value)}
+                className="h-10 w-16 cursor-pointer rounded border border-neutral-300 bg-transparent"
               />
         </DropdownMenuContent>
         </DropdownMenu>
