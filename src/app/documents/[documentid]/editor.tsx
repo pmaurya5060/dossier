@@ -88,7 +88,7 @@ export const Editor=()=>{
   });
   
   return (
-    <div className="size-full overflow-x-auto bg-[#dadada] px-4 print:p-0 print:bg-white">
+    <div className="size-full overflow-x-auto bg-[#f1f3f4] px-4 print:p-0 print:bg-white">
       <Ruler/>
     <div className="min-w-max flex justify-center w-204 py-4 print:py-0 mx-auto print:w-full print:min-w-0">
       <EditorContent editor={editor}/>

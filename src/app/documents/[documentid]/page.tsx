@@ -1,6 +1,6 @@
-
 import {Toolbar} from './toolbar';
 import {Editor} from "./editor";
+import { Navbar } from './navbar';
 interface DocumentIdProps{
   params:Promise<{documentid:string}>;
 }
@@ -10,6 +10,7 @@ const DocumentIdPage=async({params}:DocumentIdProps)=>{
 
   return(
     <div className="min-h-screen bg-[#f1f3f4]">
+      <Navbar />
       <Toolbar />
 
       <div className="flex justify-center">
