@@ -33,7 +33,7 @@ export const SearchInput = () => {
         <div className="flex w-full items-center justify-center">
             <form
                 onSubmit={handleSubmit}
-                className="relative w-full max-w-[720px]"
+                className="relative w-full max-w-180"
             >
                 <input
                     value={value}

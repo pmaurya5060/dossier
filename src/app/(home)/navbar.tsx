@@ -10,7 +10,7 @@ export const Navbar = () => {
         <h3 className="text-lg font-semibold">Dossier</h3>
       </Link>
 
-      <div className="w-full max-w-[720px] justify-self-center">
+      <div className="w-full max-w-180 justify-self-center">
         <SearchInput />
       </div>
 
