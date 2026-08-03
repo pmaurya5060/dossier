@@ -27,7 +27,7 @@ export const TemplatesGallery = () => {
               >
                 <div
                   className={cn(
-                    "aspect-[3/4] flex flex-col gap-y-2.5",
+                    "aspect-3/4 flex flex-col gap-y-2.5",
                     isCreating && "pointer-events-none opacity-50"
                   )}>
                     <button
