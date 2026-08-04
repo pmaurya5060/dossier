@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import {NuqsAdapter} from "nuqs/adapters/next/app";
 import "./globals.css";
+import { ConvexClientProvider } from "../components/ui/convex-client-provider";
 
 const geistSans = Inter({
   subsets: ["latin"],
@@ -23,7 +24,9 @@ export default function RootLayout({
         className={`${geistSans.className} `}
       >
         <NuqsAdapter>
-          {children}
+          <ConvexClientProvider>
+            {children}
+          </ConvexClientProvider>
         </NuqsAdapter>
       </body>
     </html>
