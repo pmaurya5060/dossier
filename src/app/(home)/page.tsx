@@ -6,7 +6,11 @@ import { TemplatesGallery } from "./templates-gallery"
 import { api } from "../../../convex/_generated/api"
 
 const Home = () => {
-  const documents = useQuery(api.documents.get)
+  const documents = useQuery(api.documents.get);
+
+  if(documents=== undefined) {
+    return <div>Loading...</div>
+  }
 
   return (
     <div className="flex flex-col min-h-screen">
